@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotografía Profesional</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate.css para animaciones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <!-- Font Awesome para íconos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Estilos para las secciones a pantalla completa */
+        .section {
+            height: 100vh;
+            width: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .section.active {
+            display: flex;
+            opacity: 1;
+            z-index: 10;
+        }
+
+        /* Navegación */
+        .nav-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: rgba(48, 47, 47, 0.5);
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background-color: #fbe0e0;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Menú de navegación superior */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: all 0.5s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: #fff !important;
+            margin: 0 10px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #fff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        /* Contenido de las secciones */
+        .content-wrapper {
+            max-width: 800px;
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Estilos específicos para cada sección */
+        #inicio {
+            background-image: url('https://res.cloudinary.com/dfztucwmt/image/upload/v1745101123/photographer_qpqq4h.jpg');
+        }
+
+        #portfolio {
+            background-color: #1a1a1a;
+        }
+
+        #servicios {
+            background-image: url('https://res.cloudinary.com/dfztucwmt/image/upload/v1745101215/services_photographer_p4ztaw.jpg');
+        }
+
+        #acerca {
+            background-color: #1a1a1a;
+        }
+
+        #contacto {
+            background-image: url('https://res.cloudinary.com/dfztucwmt/image/upload/v1745104785/photographer_contact_dpdc3p.jpg');
+        }
+
+        /* Galería de Portfolio */
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: all 0.5s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .service-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .service-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        /* Animación de scroll down */
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+
+        /* Formulario de contacto */
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.486);
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: none;
+        }
+
+        .btn-submit {
+            background-color: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .nav-icon-color{
+
+            color: #fbe0e0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand section-link" href="#inicio"  data-index="0">FOTOGRAFIA</a>
+            <button class="navbar-toggler nav-icon-color" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon nav-icon-color"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link section-link" href="#inicio"  data-index="0">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link section-link" href="#portfolio"  data-index="1">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link section-link" href="#servicios"  data-index="2">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link section-link" href="#acerca"  data-index="3">Acerca</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link section-link" href="#contacto"  data-index="4">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Navegación por puntos -->
+    <div class="nav-dots">
+        <div class="nav-dot active" data-section="inicio" data-index="0"></div>
+        <div class="nav-dot" data-section="portfolio" data-index="1"></div>
+        <div class="nav-dot" data-section="servicios" data-index="2"></div>
+        <div class="nav-dot" data-section="acerca" data-index="3"></div>
+        <div class="nav-dot" data-section="contacto" data-index="4"></div>
+    </div>
+
+    <!-- Secciones a pantalla completa -->
+    <div id="inicio" class="section active">
+        <div class="overlay"></div>
+            <div class="content-wrapper">
+                <h1 class="display-3 animate__animated animate__fadeInDown">FOTOGRAFÍA PROFESIONAL</h1>
+                <p class="lead animate__animated animate__fadeInUp animate__delay-1s">Capturando momentos extraordinarios</p>
+                <button class="btn btn-outline-light mt-4 animate__animated animate__fadeInUp animate__delay-2s">Descubrir más</button>
+            </div>
+        <div class="scroll-down">
+            <i class="fas fa-chevron-down fa-2x text-white"></i>
+        </div>
+    </div>
+
+    <div id="portfolio" class="section">
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <h2 class="mb-5 animate__animated animate__fadeInUp">Portfolio</h2>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="portfolio-item animate__animated animate__fadeInUp">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102659/photo_example_4_ycro2j.jpg" alt="Fotografía 1">
+                        <div class="portfolio-overlay">
+                            <h5 class="text-white">Retrato</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-item animate__animated animate__fadeInUp animate__delay-1s">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102908/photo_example_landscape_wcij78.jpg" alt="Fotografía 2">
+                        <div class="portfolio-overlay">
+                            <h5 class="text-white">Paisaje</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-item animate__animated animate__fadeInUp animate__delay-2s">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745103145/photo_example_architecture_ezwqla.jpg" alt="Fotografía 3">
+                        <div class="portfolio-overlay">
+                            <h5 class="text-white">Arquitectura</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-item animate__animated animate__fadeInUp">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745104366/photo_example_event_fxyxk3.jpg" alt="Fotografía 4">
+                        <div class="portfolio-overlay">
+                            <h5 class="text-white">Eventos</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-item animate__animated animate__fadeInUp animate__delay-1s">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102659/photo_example_5_a5nhqt.jpg" alt="Fotografía 5">
+                        <div class="portfolio-overlay">
+                            <h5 class="text-white">Bodas</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-item animate__animated animate__fadeInUp animate__delay-2s">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102659/photo_example_2_xi2mur.jpg" alt="Fotografía 6">
+                        <div class="portfolio-overlay">
+                            <h5 class="text-white">Naturaleza</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="servicios" class="section">
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <h2 class="mb-5 animate__animated animate__fadeInUp">Servicios</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp">
+                        <div class="service-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h4>Sesiones de Retrato</h4>
+                        <p>Retratos profesionales para individuos y familias.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp animate__delay-1s">
+                        <div class="service-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4>Fotografía de Bodas</h4>
+                        <p>Capturando momentos especiales en tu día más importante.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp animate__delay-2s">
+                        <div class="service-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h4>Fotografía Corporativa</h4>
+                        <p>Imágenes profesionales para empresas y productos.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp">
+                        <div class="service-icon">
+                            <i class="fas fa-map"></i>
+                        </div>
+                        <h4>Fotografía de Paisajes</h4>
+                        <p>Capturas impresionantes de la naturaleza y paisajes urbanos.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp animate__delay-1s">
+                        <div class="service-icon">
+                            <i class="fas fa-glass-cheers"></i>
+                        </div>
+                        <h4>Eventos Especiales</h4>
+                        <p>Documentando momentos importantes de tus celebraciones.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp animate__delay-2s">
+                        <div class="service-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4>Sesiones Académicas</h4>
+                        <p>Fotografías profesionales para graduaciones y eventos académicos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="acerca" class="section">
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745104582/photographer_profile_vmvjsw.jpg" alt="Fotógrafo" class="img-fluid rounded-circle mb-4 animate__animated animate__fadeInLeft">
+                </div>
+                <div class="col-md-6 text-start animate__animated animate__fadeInRight">
+                    <h2 class="mb-3">Sobre Mí</h2>
+                    <p>Con más de 10 años de experiencia en fotografía profesional, me especializo en capturar momentos únicos que cuentan historias extraordinarias.</p>
+                    <p>Mi pasión por la fotografía comenzó cuando era niño y ha evolucionado hasta convertirse en mi profesión. Cada imagen que capturo está diseñada para transmitir emociones y contar historias que perduran.</p>
+                    <div class="mt-4">
+                        <a href="#" class="me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#"><i class="fab fa-twitter fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contacto" class="section">
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <h2 class="mb-5 animate__animated animate__fadeInUp">Contacto</h2>
+            <div class="row">
+                <div class="col-md-6 animate__animated animate__fadeInLeft">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Nombre completo">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Correo electrónico">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Asunto">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" placeholder="Mensaje"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-submit mt-3">Enviar mensaje</button>
+                    </form>
+                </div>
+                <div class="col-md-6 animate__animated animate__fadeInRight">
+                    <div class="contact-info text-start">
+                        <h4 class="mb-4">Información de contacto</h4>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Calle Principal 123, Ciudad</p>
+                        <p><i class="fas fa-phone me-2"></i> +1 234 567 890</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@fotografiaprofesional.com</p>
+                        <p><i class="fas fa-clock me-2"></i> Lunes a Viernes: 9:00 - 18:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        // Variables
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.section-link');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const navbar = document.querySelector('.navbar');
+        let currentSection = 0;
+        let isScrolling = false;
+        
+        // Inicializar todas las secciones correctamente
+        sections.forEach((section, index) => {
+            if (index === 0) { // Solo la primera sección está visible inicialmente
+                section.classList.add('active');
+                section.style.display = 'flex';
+            } else {
+                section.style.display = 'none';
+            }
+        });
+
+        // Mostrar sección actual
+        function showSection(index) {
+            // Primero mostramos la nueva sección pero con opacidad 0
+            sections[index].style.display = 'flex';
+            
+            // Damos un pequeño tiempo para que el navegador procese el cambio
+            setTimeout(() => {
+                // Ocultar todas las secciones
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Activar la nueva sección
+                sections[index].classList.add('active');
+                
+                // Después de la transición, ocultar completamente las secciones inactivas
+                setTimeout(() => {
+                    sections.forEach((section, i) => {
+                        if (i !== index) {
+                            section.style.display = 'none';
+                        }
+                    });
+                }, 1000); // Coincidir con la duración de la transición
+            }, 50);
+
+            // Actualizar navegación por puntos
+            navDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            // Actualizar navegación superior
+            navLinks.forEach((link, i) => {
+                const linkIndex = parseInt(link.getAttribute('data-index'));
+                if (linkIndex === index) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            currentSection = index;
+            updateNavbar();
+        }
+
+        // Manejar desplazamiento con rueda del ratón
+        window.addEventListener('wheel', function(e) {
+            if (isScrolling) return;
+            
+            isScrolling = true;
+            setTimeout(() => { isScrolling = false; }, 1000);
+
+            if (e.deltaY > 0 && currentSection < sections.length - 1) {
+                // Desplazamiento hacia abajo
+                showSection(currentSection + 1);
+            } else if (e.deltaY < 0 && currentSection > 0) {
+                // Desplazamiento hacia arriba
+                showSection(currentSection - 1);
+            }
+        });
+
+        // Manejar clics en los puntos de navegación
+        navDots.forEach((dot) => {
+            dot.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                showSection(index);
+            });
+        });
+
+        // Manejar clics en los enlaces de navegación
+        navLinks.forEach((link) => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const index = parseInt(this.getAttribute('data-index'));
+                showSection(index);
+            });
+        });
+
+        // Manejar clic en el botón "Descubrir más"
+        document.querySelector('.btn-outline-light').addEventListener('click', function() {
+            showSection(1); // Ir a la segunda sección (Portfolio)
+        });
+
+        // Manejar clic en scroll down
+        document.querySelector('.scroll-down').addEventListener('click', function() {
+            if (currentSection < sections.length - 1) {
+                showSection(currentSection + 1);
+            }
+        });
+
+        // Cambiar color de navbar al hacer scroll
+        function updateNavbar() {
+            if (currentSection > 0) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+
+        // Activar animaciones cuando la sección está visible
+        function activateAnimations(section) {
+            const animatedElements = section.querySelectorAll('.animate__animated');
+            animatedElements.forEach(el => {
+                // Reiniciar animación
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                }, 50);
+            });
+        }
+
+        // Observar cambios en las secciones activas para activar animaciones
+        const sectionObserver = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                if (mutation.target.classList.contains('active')) {
+                    activateAnimations(mutation.target);
+                }
+            });
+        });
+
+        sections.forEach(section => {
+            sectionObserver.observe(section, { attributes: true });
+        });
+
+        // Manejar teclado (flechas)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowDown' && currentSection < sections.length - 1) {
+                showSection(currentSection + 1);
+            } else if (e.key === 'ArrowUp' && currentSection > 0) {
+                showSection(currentSection - 1);
+            }
+        });
+
+        // Detección de swipe para móviles
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (isScrolling) return;
+            
+            const diff = touchStartY - touchEndY;
+            if (Math.abs(diff) < 50) return; // Umbral mínimo para considerar swipe
+
+            isScrolling = true;
+            setTimeout(() => { isScrolling = false; }, 1000);
+
+            if (diff > 0 && currentSection < sections.length - 1) {
+                // Swipe hacia arriba (ir a la siguiente sección)
+                showSection(currentSection + 1);
+            } else if (diff < 0 && currentSection > 0) {
+                // Swipe hacia abajo (ir a la sección anterior)
+                showSection(currentSection - 1);
+            }
+        }
+        
+        // Inicializar
+        showSection(0);
+    });
+    </script>
+</body>
+</html>
