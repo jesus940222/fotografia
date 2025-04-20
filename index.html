@@ -193,6 +193,13 @@
             margin-bottom: 20px;
             transition: all 0.5s ease;
         }
+        .service-card h4 {
+            font-size: 2rem; 
+        }
+        
+        .service-card p {
+            font-size: 1.2rem; 
+        }
 
         .service-card:hover {
             transform: translateY(-10px);
@@ -260,6 +267,41 @@
 
             color: #fbe0e0;
         }
+
+        .service-card {
+            margin-bottom: 20px;
+            height: 100%;
+        }
+
+        @media (max-width: 767px) {
+            .service-icon {
+                font-size: 1.5rem; /* Iconos más pequeños en móvil */
+            }
+
+            .service-card {
+                height: auto !important;
+                min-height: 200px;
+            }
+            
+            .service-card h4 {
+                font-size: 0.8rem; /*1.2rem Títulos más pequeños en móvil */
+            }
+            
+            .service-card p {
+                font-size: 0.5rem; /* Texto más pequeño en móvil */
+            }
+
+            .section {
+                height: auto !important;
+                min-height: 100vh;
+                overflow-y: auto !important;
+                padding: 80px 0; /* Espacio para el navbar fijo */
+            }
+            
+            body, html {
+                overflow-y: auto !important; /* Permitir scroll en móviles */
+            }
+        }
     </style>
 </head>
 <body>
@@ -314,54 +356,56 @@
         </div>
     </div>
 
-    <div id="portfolio" class="section">
+    <div id="portfolio" class="section pt-3 mt-3">
         <div class="overlay"></div>
         <div class="content-wrapper">
             <h2 class="mb-5 animate__animated animate__fadeInUp">Portfolio</h2>
-            <div class="row">
-                <div class="col-md-5">
+            <div class="row g-3">
+                <!-- Primera fila -->
+                <div class="col-6 col-sm-6 col-md-4">
                     <div class="portfolio-item animate__animated animate__fadeInUp">
-                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102659/photo_example_4_ycro2j.jpg" alt="Fotografía 1">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102659/photo_example_4_ycro2j.jpg" alt="Fotografía 1" class="img-fluid">
                         <div class="portfolio-overlay">
                             <h5 class="text-white">Retrato</h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-6 col-sm-6 col-md-4">
                     <div class="portfolio-item animate__animated animate__fadeInUp animate__delay-1s">
-                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102908/photo_example_landscape_wcij78.jpg" alt="Fotografía 2">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102908/photo_example_landscape_wcij78.jpg" alt="Fotografía 2" class="img-fluid">
                         <div class="portfolio-overlay">
                             <h5 class="text-white">Paisaje</h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-6 col-sm-6 col-md-4">
                     <div class="portfolio-item animate__animated animate__fadeInUp animate__delay-2s">
-                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745103145/photo_example_architecture_ezwqla.jpg" alt="Fotografía 3">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745103145/photo_example_architecture_ezwqla.jpg" alt="Fotografía 3" class="img-fluid">
                         <div class="portfolio-overlay">
                             <h5 class="text-white">Arquitectura</h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <!-- Segunda fila -->
+                <div class="col-6 col-sm-6 col-md-4">
                     <div class="portfolio-item animate__animated animate__fadeInUp">
-                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745104366/photo_example_event_fxyxk3.jpg" alt="Fotografía 4">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745104366/photo_example_event_fxyxk3.jpg" alt="Fotografía 4" class="img-fluid">
                         <div class="portfolio-overlay">
                             <h5 class="text-white">Eventos</h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-6 col-sm-6 col-md-4">
                     <div class="portfolio-item animate__animated animate__fadeInUp animate__delay-1s">
-                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102659/photo_example_5_a5nhqt.jpg" alt="Fotografía 5">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102659/photo_example_5_a5nhqt.jpg" alt="Fotografía 5" class="img-fluid">
                         <div class="portfolio-overlay">
                             <h5 class="text-white">Bodas</h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-6 col-sm-6 col-md-4">
                     <div class="portfolio-item animate__animated animate__fadeInUp animate__delay-2s">
-                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102659/photo_example_2_xi2mur.jpg" alt="Fotografía 6">
+                        <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745102659/photo_example_2_xi2mur.jpg" alt="Fotografía 6" class="img-fluid">
                         <div class="portfolio-overlay">
                             <h5 class="text-white">Naturaleza</h5>
                         </div>
@@ -375,8 +419,80 @@
         <div class="overlay"></div>
         <div class="content-wrapper">
             <h2 class="mb-5 animate__animated animate__fadeInUp">Servicios</h2>
-            <div class="row">
-                <div class="col-md-4">
+            <div class="row g-3">
+                <!-- Primera fila -->
+                <div class="col-6 col-sm-6 col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp">
+                        <div class="service-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h4 class="text-white">Sesiones de Retrato</h4>
+                        <p class="text-white">Retratos profesionales para individuos y familias.</p>
+                    </div>
+                </div>
+
+                <div class="col-6 col-sm-6 col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp">
+                        <div class="service-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4 class="text-white">Fotografía de Bodas</h4>
+                        <p class="text-white">Capturando momentos especiales en tu día más importante.</p>
+                    </div>
+                </div>
+
+                <div class="col-6 col-sm-6 col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp">
+                        <div class="service-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h4 class="text-white">Fotografía Corporativa</h4>
+                        <p class="text-white">Imágenes profesionales para empresas y productos.</p>
+                    </div>
+                </div>
+
+                <div class="col-6 col-sm-6 col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp">
+                        <div class="service-icon">
+                            <i class="fas fa-map"></i>
+                        </div>
+                        <h4 class="text-white">Fotografía de Paisajes</h4>
+                        <p class="text-white">Capturas impresionantes de la naturaleza y paisajes urbanos.</p>
+                    </div>
+                </div>
+
+                <div class="col-6 col-sm-6 col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp">
+                        <div class="service-icon">
+                            <i class="fas fa-glass-cheers"></i>
+                        </div>
+                        <h4 class="text-white">Eventos Especiales</h4>
+                        <p class="text-white">Documentando momentos importantes de tus celebraciones.</p>
+                    </div>
+                </div>
+
+                <div class="col-6 col-sm-6 col-md-4">
+                    <div class="service-card animate__animated animate__fadeInUp">
+                        <div class="service-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4 class="text-white">Sesiones Académicas</h4>
+                        <p class="text-white">Fotografías profesionales para graduaciones y eventos académicos.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!--
+    <div id="servicios" class="section">
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <h2 class="mb-5 animate__animated animate__fadeInUp">Servicios</h2>
+            <div class="row g-3">
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
                     <div class="service-card animate__animated animate__fadeInUp">
                         <div class="service-icon">
                             <i class="fas fa-camera"></i>
@@ -385,7 +501,7 @@
                         <p>Retratos profesionales para individuos y familias.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
                     <div class="service-card animate__animated animate__fadeInUp animate__delay-1s">
                         <div class="service-icon">
                             <i class="fas fa-heart"></i>
@@ -394,7 +510,7 @@
                         <p>Capturando momentos especiales en tu día más importante.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
                     <div class="service-card animate__animated animate__fadeInUp animate__delay-2s">
                         <div class="service-icon">
                             <i class="fas fa-building"></i>
@@ -403,7 +519,7 @@
                         <p>Imágenes profesionales para empresas y productos.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
                     <div class="service-card animate__animated animate__fadeInUp">
                         <div class="service-icon">
                             <i class="fas fa-map"></i>
@@ -412,7 +528,7 @@
                         <p>Capturas impresionantes de la naturaleza y paisajes urbanos.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
                     <div class="service-card animate__animated animate__fadeInUp animate__delay-1s">
                         <div class="service-icon">
                             <i class="fas fa-glass-cheers"></i>
@@ -421,7 +537,7 @@
                         <p>Documentando momentos importantes de tus celebraciones.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
                     <div class="service-card animate__animated animate__fadeInUp animate__delay-2s">
                         <div class="service-icon">
                             <i class="fas fa-graduation-cap"></i>
@@ -433,7 +549,33 @@
             </div>
         </div>
     </div>
-
+    -->
+    
+    <div id="acerca" class="section pt-10">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row align-items-center gy-4">
+                <div class="col-md-6 text-center">
+                    <img src="https://res.cloudinary.com/dfztucwmt/image/upload/v1745104582/photographer_profile_vmvjsw.jpg" 
+                         alt="Fotógrafo" 
+                         class="img-fluid rounded-circle mb-2 animate__animated animate__fadeInLeft"
+                         style="max-width: 50%;">
+                </div>
+                <div class="col-md-6 text-start text-white animate__animated animate__fadeInRight pt-5">
+                    <h2 class="mb-3">Sobre Mí</h2>
+                    <p>Con más de 10 años de experiencia en fotografía profesional, me especializo en capturar momentos únicos que cuentan historias extraordinarias.</p>
+                    <p>Mi pasión por la fotografía comenzó cuando era niño y ha evolucionado hasta convertirse en mi profesión. Cada imagen que capturo está diseñada para transmitir emociones y contar historias que perduran.</p>
+                    <div class="mt-4">
+                        <a href="#" class="me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#"><i class="fab fa-twitter fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--
     <div id="acerca" class="section">
         <div class="overlay"></div>
         <div class="content-wrapper">
@@ -454,13 +596,14 @@
             </div>
         </div>
     </div>
+    -->
 
     <div id="contacto" class="section">
         <div class="overlay"></div>
         <div class="content-wrapper">
             <h2 class="mb-5 animate__animated animate__fadeInUp">Contacto</h2>
             <div class="row">
-                <div class="col-md-6 animate__animated animate__fadeInLeft">
+                <div class="col-md-6 animate__animated animate__fadeInLeft pb-3">
                     <form>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Nombre completo">
@@ -478,7 +621,7 @@
                     </form>
                 </div>
                 <div class="col-md-6 animate__animated animate__fadeInRight">
-                    <div class="contact-info text-start">
+                    <div class="contact-info text-start" style="color:rgb(255, 255, 255);">
                         <h4 class="mb-4">Información de contacto</h4>
                         <p><i class="fas fa-map-marker-alt me-2"></i> Calle Principal 123, Ciudad</p>
                         <p><i class="fas fa-phone me-2"></i> +1 234 567 890</p>
